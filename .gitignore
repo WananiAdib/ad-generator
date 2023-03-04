@@ -1,3 +1,9 @@
+node_modules
+.env
+back-end/img
+back-end/qrcodes
+
+
 # Logs
 logs
 *.log
