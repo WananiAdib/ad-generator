@@ -18,34 +18,22 @@ try {
 		model: "text-davinci-003",
 		prompt: `
 		{
-			title : "",
-			description: "",
-			image_prompt: "",
-			date: "",
-			location: ""
+			"title" : "",
+			"description": "",
+			"image_prompt": "",
+			"date": "",
+			"location": ""
 		  }
 		  from the prompt: ${prompt}
 		  
-		  Fill the json above. title would be the title of the poster. description a very small marketing hook. image_prompt a detailed description of the background photo and the style. fill out date and location. Return the JSON object only.`,
+		  Fill the json above. title would be the title of the poster. description a very small marketing hook. image_prompt a detailed description of the background photo, should not include text. fill out date and location. Return the JSON object only.`,
 		  max_tokens: 256
 	});
 	console.log(completion.data.choices[0].text);
-
-
-} catch (error) {
-	if (error.response) {
-		console.log(error.response.status);
-		console.log(error.response.data);
-	} else {
-		console.log(error.message);
-	}
-}
-
-const image_prompt = "A photo of a group of businesspeople shaking hands and smiling. The colors in the photo should have a warm and inviting look."
-
-try {
+	const result = JSON.parse(completion.data.choices[0].text)
+	console.log(result)
 	const image = await openai.createImage({
-		prompt: image_prompt,
+		prompt: result.image_prompt,
 		n: 1,
 		size: "1024x1024"
 	});
@@ -57,10 +45,9 @@ try {
 	const raw = await background.blob();
 	const buffer = Buffer.from(await raw.arrayBuffer())
 
-	fs.writeFileSync('./img/${Date.now()}.png', buffer);
+	fs.writeFileSync(`./img/${Date.now()}.png`, buffer);
 
-
-}catch(error){
+} catch (error) {
 	if (error.response) {
 		console.log(error.response.status);
 		console.log(error.response.data);
@@ -68,6 +55,22 @@ try {
 		console.log(error.message);
 	}
 }
+
+// const image_prompt = "A photo of a group of businesspeople shaking hands and smiling. The colors in the photo should have a warm and inviting look."
+// console.log(completion.data.choices[0].text);
+
+// try {
+	
+
+
+// }catch(error){
+// 	if (error.response) {
+// 		console.log(error.response.status);
+// 		console.log(error.response.data);
+// 	} else {
+// 		console.log(error.message);
+// 	}
+// }
 
 
 app.listen(
