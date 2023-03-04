@@ -1,6 +1,7 @@
 import express from "express";
 import { Configuration, OpenAIApi } from "openai";
 import * as dotenv from "dotenv";
+import * as fs from 'fs'
 dotenv.config()
 const app = express();
 
@@ -29,6 +30,8 @@ try {
 		  max_tokens: 256
 	});
 	console.log(completion.data.choices[0].text);
+
+
 } catch (error) {
 	if (error.response) {
 		console.log(error.response.status);
@@ -37,7 +40,44 @@ try {
 		console.log(error.message);
 	}
 }
+
+const image_prompt = "A photo of a group of businesspeople shaking hands and smiling. The colors in the photo should have a warm and inviting look."
+
+try {
+	const image = await openai.createImage({
+		prompt: image_prompt,
+		n: 1,
+		size: "1024x1024"
+	});
+
+	const url = image.data.data[0].url
+	console.log(url);
+
+	const background = await fetch(url);
+	const raw = await background.blob();
+	const buffer = Buffer.from(await raw.arrayBuffer())
+
+	fs.writeFileSync('./img/${Date.now()}.png', buffer);
+
+
+}catch(error){
+	if (error.response) {
+		console.log(error.response.status);
+		console.log(error.response.data);
+	} else {
+		console.log(error.message);
+	}
+}
+
+
 app.listen(
-	process.env.PORT || 5000,
+	process.env.PORT || 5001,
 	console.log(`Server starting at ${process.env.PORT || 5000}`)
 );
+
+
+
+
+
+
+
