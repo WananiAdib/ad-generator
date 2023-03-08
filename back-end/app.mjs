@@ -3,6 +3,7 @@ import { Configuration, OpenAIApi } from "openai";
 import * as dotenv from "dotenv";
 import * as fs from "fs";
 import * as QRCode from "qrcode";
+import sharp from "sharp";
 
 dotenv.config();
 const app = express();
@@ -14,7 +15,7 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 const prompt =
-	"Hey I have an event on Monday 13th March in Puxi for networking event for nyu students as part of the business club.";
+	"Design a poster with a photo of students gathering, for PCI running an event on Monday at 5.15 pm";
 
 const event_url = "https://engage.shanghai.nyu.edu/event/8917833";
 
@@ -50,7 +51,8 @@ try {
 	const background = await fetch(url);
 	const raw = await background.blob();
 	const buffer = Buffer.from(await raw.arrayBuffer());
-	fs.writeFileSync(`./img/${Date.now()}.png`, buffer);
+	const imageName = `./img/${Date.now()}.png`;
+	fs.writeFileSync(imageName, buffer);
 
 	// QRCode generation
 	QRCode.toFile(
@@ -68,6 +70,27 @@ try {
 			console.log(QRcode);
 		}
 	);
+	// Sharp area
+	const width = 512;
+	const height = 512;
+	const text = "E.T, go home";
+
+	const svgText = `
+	<svg width="${width}" height="${height}">
+		<style>
+		.title { fill: black; font-size: 85px}
+		.title2 { fill: black; font-size: 70px}
+		</style>
+		<text x="10%" y="10%" text-anchor="middle" class="title">${result.title}</text>
+		<text x="10%" y="30%" text-anchor="middle" class="title2">${result.description}</text>
+	</svg>`
+
+	const svgBuffer = Buffer.from(svgText);
+
+	sharp(imageName)
+	.composite([{input: svgBuffer, left: 300, top: 300}])
+	.toFile('./processed/text_robo.jpg')
+
 } catch (error) {
 	if (error.response) {
 		console.log(error.response.status);
