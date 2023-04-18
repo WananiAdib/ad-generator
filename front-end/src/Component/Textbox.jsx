@@ -1,6 +1,7 @@
 import { useState } from "react"
+import "./Textbox.css"
 
-const TextBox = () => {
+const TextBox = (props) => {
 
     const [newMessage, setMessage] = useState(
         ""
@@ -17,11 +18,14 @@ const TextBox = () => {
 
     }
 
+    console.log("new", newMessage)
+
     return(
         <div>
-            <form onSubmit={addMessage} placeholder = {"Enter Prompt"}>
+            <form  onSubmit={addMessage}>
                 <input
-                placeholder = {"Enter Prompt"}
+                className = "box"
+                placeholder = {props.prompt}
                 onChange = {handlePrompt}
                 /> 
             </form>
