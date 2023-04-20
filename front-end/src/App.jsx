@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import logo from './logo.svg'
+import axios from 'axios'
 import './App.css'
 import TextBox from './Component/Textbox'
 import Button from './Component/Button'
@@ -32,11 +32,18 @@ function App() {
   }
 
   //handle Submission 
-  const handleSubmit = (e) =>{
+  const handleSubmit = async (e) =>{
     e.preventDefault()
-    const posterInfo = {date, location, description, qr};
-    // add post request axios in here 
-    console.log(posterInfo)
+    const posterInfo = {date, location, description, qr}; //delete this when server is running
+    //add post request axios in here 
+    // try {
+    //   const resp = await axios.post("/", {date:date, location:location, description: description, qr:qr});
+    //   console.log(resp.data)
+    // }
+    // catch (error){
+    //   console.log(error.response)
+    // }
+    console.log(posterInfo) // delete when server is running
   }
   
   return (
