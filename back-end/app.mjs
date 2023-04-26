@@ -15,7 +15,7 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 const prompt =
-	"Design a poster with a photo of students gathering, for PCI running an event on Monday at 5.15 pm";
+	"next sunday i'll be organizing a picnic in houtan park for my university residents. i need a poster that sort of looks like an 80s ski suit (colorwise, ofc), apaert from that it just needs some basic info, time, seven thirty, food, included music, live performing dj";
 
 const event_url = "https://engage.shanghai.nyu.edu/event/8917833";
 
@@ -41,7 +41,7 @@ try {
 
 	// Image generation by Dall-E-2
 	const image = await openai.createImage({
-		prompt: `${result.image_prompt}. Do not include text in the photo`,
+		prompt: `${result.image_prompt}. Do not include text, do not show faces. Abstract style`,
 		n: 1,
 		size: "1024x1024",
 	});
@@ -71,25 +71,31 @@ try {
 		}
 	);
 	// Sharp area
-	const width = 512;
-	const height = 512;
-	const text = "E.T, go home";
+	const width = 1024;
+	const height = 1024;
 
 	const svgText = `
-	<svg width="${width}" height="${height}">
-		<style>
-		.title { fill: black; font-size: 85px}
-		.title2 { fill: black; font-size: 70px}
-		</style>
-		<text x="10%" y="10%" text-anchor="middle" class="title">${result.title}</text>
-		<text x="10%" y="30%" text-anchor="middle" class="title2">${result.description}</text>
+	<svg width="1024" height="1366" xmlns="http://www.w3.org/2000/svg">
+			<style>
+			.title { fill: white; font-size: 85px}
+			.title2 { fill: white; font-size: 40px}
+		.title3 { fill: white; font-size: 20px}
+			</style>
+	  <rect width="1024" height="171" x="0" y="0" />
+	  <rect width="1024" height="171" x="0" y="1195" />
+	  <text x = "20" y = "80" class = "title">${result.title}</text>
+	  <text x = "20" y = "140" class = "title2">${result.date}</text>
+		<text x = "20" y = "1245" class = "title2">${result.location}</text>
+	  <text x = "20" y = "1290" class = "title3">${result.description}</text>
+	
 	</svg>`
 
 	const svgBuffer = Buffer.from(svgText);
+	const imageBuffer = Buffer.from(buffer);
 
-	sharp(imageName)
-	.composite([{input: svgBuffer, left: 300, top: 300}])
-	.toFile('./processed/text_robo.jpg')
+	sharp(svgBuffer)
+	.composite([{input: imageBuffer}])
+	.toFile(`./processed/pro_${Date.now()}.jpg`)
 
 } catch (error) {
 	if (error.response) {
