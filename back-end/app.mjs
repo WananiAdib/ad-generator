@@ -74,6 +74,7 @@ try {
 	const width = 1024;
 	const height = 1024;
 
+	// -----Template 1 Code 
 	// const svgText = `
 	// <svg width="1024" height="1366" xmlns="http://www.w3.org/2000/svg">
 	// 		<style>
@@ -87,35 +88,86 @@ try {
 	//   <text x = "20" y = "140" class = "title2">${result.date}</text>
 	// 	<text x = "20" y = "1245" class = "title2">${result.location}</text>
 	//   <text x = "20" y = "1290" class = "title3">${result.description}</text>
-	
 	// </svg>`
 
-	const svgText = 
-	`<svg width="1024" height="1366" xmlns="http://www.w3.org/2000/svg">
-	<style>
-	   body {background-color: black; font-family: Helvetica}
-	.title { fill: white; font-size: 100px}
-	.title2 { fill: white; font-size: 40px}
-   .title3 { fill: white; font-size: 20px}
-	</style>
-	<rect width="700" height="700" x="162" y="450" fill="white" />
-	<text x = "50%" y = "16%" text-anchor="middle" font-family = "Helvetica" class = "title">${result.title}</text>
-	<text x = "974" y = "1258" class = "title2"  text-anchor="end" > ${result.date}</text>
-   <text x = "50" y = "1258" class = "title2">${result.location}</text>
-	<text x = "50%" y = "23%" class = "title3" text-anchor="middle" >
-	   <tspan>${result.description}</tspan>
-	   <tspan x = "50%" y = "25%"></tspan>
-	 </text>
-  
-  </svg>`
+	// ----End of Template 1 Code ------
 
-	const svgBuffer = Buffer.from(svgText);
+// -----Template 2 code -------
+// 	const svgText = 
+// 	`<svg width="1024" height="1366" xmlns="http://www.w3.org/2000/svg">
+// 	<style>
+// 	   body {background-color: black; font-family: Helvetica}
+// 	.title { fill: white; font-size: 100px}
+// 	.title2 { fill: white; font-size: 40px}
+//    .title3 { fill: white; font-size: 20px}
+// 	</style>
+// 	<rect width="700" height="700" x="162" y="450" fill="white" />
+// 	<text x = "50%" y = "16%" text-anchor="middle" font-family = "Helvetica" class = "title">${result.title}</text>
+// 	<text x = "974" y = "1258" class = "title2"  text-anchor="end" > ${result.date}</text>
+//    <text x = "50" y = "1258" class = "title2">${result.location}</text>
+// 	<text x = "50%" y = "23%" class = "title3" text-anchor="middle" >
+// 	   <tspan>${result.description}</tspan>
+// 	   <tspan x = "50%" y = "25%"></tspan>
+// 	 </text>
+  
+//   </svg>`
+
+// 	const svgBuffer = Buffer.from(svgText);
+// 	const imageBuffer = Buffer.from(buffer);
+// 	const resizeImage = await sharp(buffer).resize(700).toBuffer();
+
+// 	sharp(svgBuffer)
+// 	.composite([{input: resizeImage, top: 450, left: 162}])
+// 	.toFile(`./processed/pro_${Date.now()}.jpg`)
+// --- End of Template 2 Code ------
+
+// ---Template 3 Code -----
+	// const svgText = `
+	// <svg width="1024" height="1366" xmlns="http://www.w3.org/2000/svg">
+ 	// <style>
+ 	// 	.title { fill: white; font-size: 85px}
+	// 	.title2 { fill: white; font-size: 40px}
+ 	// 	.title3 { fill: white; font-size: 20px}
+	// </style>
+  	// <rect width="1024" height="342" x="0" y="0" />
+  	// <text x = "20" y = "110" class = "title">${result.title}</text>
+  	// <text x = "20" y = "165" class = "title2">${result.date}</text>
+	// <text x = "20" y = "210" class = "title2">${result.location}</text>
+  	// <text x = "20" y = "250" class = "title3">${result.description}</text>
+ 	// </svg>`
+
+	// const svgBuffer =  Buffer.from(svgText);
+	// const imageBuffer = Buffer.from(buffer);
+
+	// sharp(svgBuffer)
+	// .composite([{input: imageBuffer, top: 342, left:0}])
+	// .toFile(`./processed/pro_${Date.now()}.jpg`)
+	// ----end of template 3 code ----
+
+	//--- Template 4 Code-----
+	const svgText = ` 
+	<svg width="1024" height="1366" xmlns="http://www.w3.org/2000/svg">
+	<style>
+	.title { fill: white; font-size: 85px}
+   .title2 { fill: white; font-size: 40px}
+	.title3 { fill: white; font-size: 30px}
+   </style>
+	<rect width="1024" height="342" x="0" y="1024" />
+	<text x = "20" y = "1100" class = "title">${result.title}</text>
+	<text x = "20" y = "1200" class = "title2">${result.date}</text>
+	<text x = "20" y = "1160" class = "title2">${result.location}</text>
+	<text x = "20" y = "1250" class = "title3">${result.description}</text>
+	</svg>`
+
+	const svgBuffer =  Buffer.from(svgText);
 	const imageBuffer = Buffer.from(buffer);
-	const resizeImage = await sharp(buffer).resize(700).toBuffer();
 
 	sharp(svgBuffer)
-	.composite([{input: resizeImage, top: 450, left: 162}])
+	.composite([{input: imageBuffer, top: 0, left:0}])
 	.toFile(`./processed/pro_${Date.now()}.jpg`)
+
+	///----End of Template 4 Code----
+
 
 } catch (error) {
 	if (error.response) {
