@@ -14,6 +14,7 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
+
 const prompt =
 	"We are going to have an event called pitch night where a few NYU Shanghai students are going to present in front of a jury of Chinese and western investors its going to be on May 11th, 2023 at 6pm at Room E403 on NYU Shanghai campus";
 
@@ -147,6 +148,7 @@ try {
 	//--- Template 4 Code-----
 	const svgText = ` 
 	<svg width="1024" height="1366" xmlns="http://www.w3.org/2000/svg">
+
 	<style>
 	.title { fill: white; font-size: 85px}
    .title2 { fill: white; font-size: 40px}
