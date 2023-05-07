@@ -1,30 +1,15 @@
 import { useState } from "react"
+import "./Textbox.css"
 
-const TextBox = () => {
-
-    const [newMessage, setMessage] = useState(
-        ""
-    )
-
-    const addMessage = (e) => {
-        e.preventDefault()
-        console.log("button clicked", e.target)
-    }
-
-    const handlePrompt = (e) =>{
-        console.log(e.target.value)
-        setMessage(e.target.value)
-
-    }
+const TextBox = (props) => {
 
     return(
         <div>
-            <form onSubmit={addMessage} placeholder = {"Enter Prompt"}>
-                <input
-                placeholder = {"Enter Prompt"}
-                onChange = {handlePrompt}
-                /> 
-            </form>
+            <input
+                className = "box"
+                placeholder = {props.prompt}
+                onChange = {props.onChange}
+            /> 
         </div>
     )
 
