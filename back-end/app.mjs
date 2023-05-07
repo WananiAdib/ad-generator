@@ -14,9 +14,8 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-const prompt =
-	"next sunday i'll be organizing a picnic in houtan park for my university residents. i need a poster that sort of looks like an 80s ski suit (colorwise, ofc), apaert from that it just needs some basic info, time, seven thirty, food, included music, live performing dj";
-
+// const prompt = "There's gonna be an event in NYU Shanghai. The event is going to be a Pitch Night come and hear NYU Shanghai students pitch their startup in front of jury of Professional Chinese and western Investors & entrepreneurs - on May 11, 2023 at 6 PM Room E403 for 2 hours - The event will be public. Show some students in colorful manner presenting the pitch"
+const prompt = "Pitch Night come and hear NYU Shanghai students pitch their startup in front of jury of Professional Chinese and western Investors and entrepreneurs - on May 11, 2023 at 6 PM Room E403 for 2 hours - The event will be public. The photo should be par style about the event. the title should be Pitch Night"
 const event_url = "https://engage.shanghai.nyu.edu/event/8917833";
 
 try {
@@ -83,10 +82,10 @@ try {
 			</style>
 	  <rect width="1024" height="171" x="0" y="0" />
 	  <rect width="1024" height="171" x="0" y="1195" />
-	  <text x = "20" y = "80" class = "title">${result.title}</text>
-	  <text x = "20" y = "140" class = "title2">${result.date}</text>
-		<text x = "20" y = "1245" class = "title2">${result.location}</text>
-	  <text x = "20" y = "1290" class = "title3">${result.description}</text>
+	  <text x = "20" y = "80" class = "title">${result.title || ""}</text>
+	  <text x = "20" y = "140" class = "title2">${result.date || ""}</text>
+		<text x = "20" y = "1245" class = "title2">${result.location || ""}</text>
+	  <text x = "20" y = "1290" class = "title3">${result.description || ""}</text>
 	
 	</svg>`
 
@@ -96,6 +95,7 @@ try {
 	sharp(svgBuffer)
 	.composite([{input: imageBuffer}])
 	.toFile(`./processed/pro_${Date.now()}.jpg`)
+
 
 } catch (error) {
 	if (error.response) {
