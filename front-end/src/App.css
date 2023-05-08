@@ -1,3 +1,17 @@
-.space{
-    padding: 100px; 
+.space {
+    padding: 100px;
+}
+
+div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+img {
+    margin: 1em;
+}
+
+input {
+    width: 50%;
 }
